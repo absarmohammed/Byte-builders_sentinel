@@ -1,0 +1,62 @@
+{
+  "SCC1": {
+    "transactions": 0,
+    "anomalies": 0,
+    "queue_length": 1.3761276891047884,
+    "avg_dwell_time": 19.469882026370577,
+    "system_crashes": 55,
+    "scan_avoidance": 22,
+    "barcode_switching": 259,
+    "weight_discrepancies": 18,
+    "inventory_alerts": 0,
+    "resource_efficiency": 100.0
+  },
+  "SCC2": {
+    "transactions": 0,
+    "anomalies": 0,
+    "queue_length": 0.9818688981868898,
+    "avg_dwell_time": 13.472245467224546,
+    "system_crashes": 8,
+    "scan_avoidance": 0,
+    "barcode_switching": 0,
+    "weight_discrepancies": 0,
+    "inventory_alerts": 0,
+    "resource_efficiency": 100.0
+  },
+  "SCC3": {
+    "transactions": 0,
+    "anomalies": 0,
+    "queue_length": 0.6071179344033496,
+    "avg_dwell_time": 8.214724354501048,
+    "system_crashes": 91,
+    "scan_avoidance": 0,
+    "barcode_switching": 0,
+    "weight_discrepancies": 0,
+    "inventory_alerts": 0,
+    "resource_efficiency": 100.0
+  },
+  "SCC4": {
+    "transactions": 0,
+    "anomalies": 0,
+    "queue_length": 0.3407821229050279,
+    "avg_dwell_time": 4.747555865921788,
+    "system_crashes": 9,
+    "scan_avoidance": 0,
+    "barcode_switching": 0,
+    "weight_discrepancies": 0,
+    "inventory_alerts": 0,
+    "resource_efficiency": 100.0
+  },
+  "RC1": {
+    "transactions": 0,
+    "anomalies": 0,
+    "queue_length": 1.1956974323386538,
+    "avg_dwell_time": 16.663566967383762,
+    "system_crashes": 2,
+    "scan_avoidance": 0,
+    "barcode_switching": 0,
+    "weight_discrepancies": 0,
+    "inventory_alerts": 0,
+    "resource_efficiency": 100.0
+  }
+}

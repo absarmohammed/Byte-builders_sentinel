@@ -1,1 +1,33 @@
-{"timestamp": "2025-10-04T00:00:00Z", "event_type": "placeholder", "data": {"note": "This is a placeholder file. Replace with actual test results."}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"PRD_001": 50, "PRD_002": 35, "PRD_003": 80}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_id": "CUST_1001", "sku": "PRD_002", "product_name": "Product 2", "price": 11.49, "weight_g": 260, "value": 46}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_count": 3, "average_dwell_time": 34.0}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"predicted_product": "PRD_001", "accuracy": 0.85}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"epc": "E200000003EC", "location": "checkout_zone", "sku": "PRD_002"}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"PRD_001": 48, "PRD_002": 34, "PRD_003": 79}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_id": "CUST_1006", "sku": "PRD_001", "product_name": "Product 1", "price": 18.990000000000002, "weight_g": 310, "value": 51}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_count": 2, "average_dwell_time": 44.0}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"predicted_product": "PRD_003", "accuracy": 0.8999999999999999}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"epc": "E200000003F1", "location": "checkout_zone", "sku": "PRD_001"}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"PRD_001": 45, "PRD_002": 32, "PRD_003": 78}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_id": "CUST_1011", "sku": "PRD_003", "product_name": "Product 3", "price": 11.49, "weight_g": 360, "value": 250}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_count": 1, "average_dwell_time": 54.0}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"predicted_product": "PRD_002", "accuracy": 0.95}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"epc": "E200000003F6", "location": "checkout_zone", "sku": "PRD_003"}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"PRD_001": 43, "PRD_002": 30, "PRD_003": 77}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_id": "CUST_1016", "sku": "PRD_002", "product_name": "Product 2", "price": 18.990000000000002, "weight_g": 410, "value": 250}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_count": 6, "average_dwell_time": 64.0}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"predicted_product": "PRD_001", "accuracy": 0.82}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"epc": "E200000003FB", "location": "checkout_zone", "sku": "PRD_002"}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"PRD_001": 40, "PRD_002": 29, "PRD_003": 75}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_id": "CUST_1021", "sku": "PRD_001", "product_name": "Product 1", "price": 11.49, "weight_g": 260, "value": 250}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_count": 5, "average_dwell_time": 74.0}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"predicted_product": "PRD_003", "accuracy": 0.87}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"epc": "E20000000400", "location": "checkout_zone", "sku": "PRD_001"}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"PRD_001": 38, "PRD_002": 27, "PRD_003": 74}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_id": "CUST_1026", "sku": "PRD_003", "product_name": "Product 3", "price": 18.990000000000002, "weight_g": 310, "value": 71}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"customer_count": 4, "average_dwell_time": 34.0}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"predicted_product": "PRD_002", "accuracy": 0.9199999999999999}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "unknown", "processed": true, "data": {"epc": "E20000000405", "location": "checkout_zone", "sku": "PRD_003"}}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "anomaly_detected", "anomaly_type": "threshold_exceeded", "original_event_index": 11, "severity": "high"}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "anomaly_detected", "anomaly_type": "threshold_exceeded", "original_event_index": 16, "severity": "high"}
+{"timestamp": "2025-10-04T11:04:32.613773", "event_type": "anomaly_detected", "anomaly_type": "threshold_exceeded", "original_event_index": 21, "severity": "high"}

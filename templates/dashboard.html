@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retail Analytics Dashboard - Byte-builders Sentinel</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-bottom: 3px solid #4CAF50;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card.success { border-left-color: #4CAF50; }
+        .metric-card.warning { border-left-color: #FF9800; }
+        .metric-card.danger { border-left-color: #f44336; }
+        .metric-card.info { border-left-color: #2196F3; }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+            gap: 2rem;
+        }
+
+        .refresh-info {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .loading {
+            animation: pulse 2s infinite;
+        }
+
+        .inventory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .inventory-item {
+            background: #f5f5f5;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .inventory-sku {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .inventory-count {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏪 Retail Analytics Dashboard</h1>
+        <p>Real-time monitoring and intelligence for modern retail operations</p>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Key Metrics -->
+        <div class="metrics-grid" id="metricsGrid">
+            <div class="loading">Loading metrics...</div>
+        </div>
+
+        <!-- Charts Grid -->
+        <div class="charts-grid">
+            <!-- Timeline Chart -->
+            <div class="chart-container">
+                <h3 class="chart-title">📊 Event Timeline</h3>
+                <div id="timelineChart">
+                    <div class="loading">Loading timeline...</div>
+                </div>
+            </div>
+
+            <!-- Station Performance -->
+            <div class="chart-container">
+                <h3 class="chart-title">🏪 Station Performance</h3>
+                <div id="stationChart">
+                    <div class="loading">Loading station data...</div>
+                </div>
+            </div>
+
+            <!-- Anomaly Heatmap -->
+            <div class="chart-container">
+                <h3 class="chart-title">🔥 Anomaly Heatmap</h3>
+                <div id="heatmapChart">
+                    <div class="loading">Loading heatmap...</div>
+                </div>
+            </div>
+
+            <!-- Current Inventory -->
+            <div class="chart-container">
+                <h3 class="chart-title">📦 Current Inventory</h3>
+                <div id="inventoryDisplay">
+                    <div class="loading">Loading inventory...</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="refresh-info">
+            🔄 Dashboard auto-refreshes every 30 seconds | Last updated: <span id="lastUpdate">--</span>
+        </div>
+    </div>
+
+    <script>
+        // Update last refresh time
+        function updateLastRefreshTime() {
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+        }
+
+        // Create metrics cards
+        function createMetricsCards(metrics) {
+            const grid = document.getElementById('metricsGrid');
+            
+            const cards = [
+                {
+                    title: 'Total Events',
+                    value: metrics.total_events || 0,
+                    type: 'info',
+                    icon: '📊'
+                },
+                {
+                    title: 'Anomalies Detected',
+                    value: metrics.anomaly_count || 0,
+                    type: metrics.anomaly_count > 0 ? 'warning' : 'success',
+                    icon: '⚠️'
+                },
+                {
+                    title: 'Anomaly Rate',
+                    value: (metrics.anomaly_rate || 0).toFixed(1) + '%',
+                    type: metrics.anomaly_rate > 5 ? 'danger' : metrics.anomaly_rate > 2 ? 'warning' : 'success',
+                    icon: '📈'
+                },
+                {
+                    title: 'Critical Alerts',
+                    value: metrics.critical_alerts || 0,
+                    type: metrics.critical_alerts > 0 ? 'danger' : 'success',
+                    icon: '🚨'
+                },
+                {
+                    title: 'System Error Rate',
+                    value: (metrics.system_error_rate || 0).toFixed(1) + '%',
+                    type: metrics.system_error_rate > 5 ? 'danger' : metrics.system_error_rate > 2 ? 'warning' : 'success',
+                    icon: '🔧'
+                }
+            ];
+
+            grid.innerHTML = cards.map(card => `
+                <div class="metric-card ${card.type}">
+                    <div class="metric-value">${card.icon} ${card.value}</div>
+                    <div class="metric-label">${card.title}</div>
+                </div>
+            `).join('');
+        }
+
+        // Create inventory display
+        function createInventoryDisplay(inventory) {
+            const container = document.getElementById('inventoryDisplay');
+            
+            if (!inventory || Object.keys(inventory).length === 0) {
+                container.innerHTML = '<div class="loading">No inventory data available</div>';
+                return;
+            }
+
+            const inventoryHTML = Object.entries(inventory).map(([sku, count]) => `
+                <div class="inventory-item">
+                    <div class="inventory-sku">${sku}</div>
+                    <div class="inventory-count">${count}</div>
+                </div>
+            `).join('');
+
+            container.innerHTML = `<div class="inventory-grid">${inventoryHTML}</div>`;
+        }
+
+        // Fetch and update metrics
+        async function fetchMetrics() {
+            try {
+                const response = await fetch('/api/metrics');
+                const metrics = await response.json();
+                createMetricsCards(metrics);
+                createInventoryDisplay(metrics.current_inventory);
+            } catch (error) {
+                console.error('Error fetching metrics:', error);
+                document.getElementById('metricsGrid').innerHTML = 
+                    '<div class="metric-card danger"><div class="metric-value">❌ Error</div><div class="metric-label">Failed to load metrics</div></div>';
+            }
+        }
+
+        // Fetch and update timeline
+        async function fetchTimeline() {
+            try {
+                const response = await fetch('/api/timeline');
+                const timeline = await response.json();
+                
+                if (timeline && Object.keys(timeline).length > 0) {
+                    Plotly.newPlot('timelineChart', timeline.data, timeline.layout, {responsive: true});
+                } else {
+                    document.getElementById('timelineChart').innerHTML = '<div class="loading">No timeline data available</div>';
+                }
+            } catch (error) {
+                console.error('Error fetching timeline:', error);
+                document.getElementById('timelineChart').innerHTML = '<div class="loading">Error loading timeline</div>';
+            }
+        }
+
+        // Fetch and update station performance
+        async function fetchStationPerformance() {
+            try {
+                const response = await fetch('/api/station-performance');
+                const chart = await response.json();
+                
+                if (chart && Object.keys(chart).length > 0) {
+                    Plotly.newPlot('stationChart', chart.data, chart.layout, {responsive: true});
+                } else {
+                    document.getElementById('stationChart').innerHTML = '<div class="loading">No station data available</div>';
+                }
+            } catch (error) {
+                console.error('Error fetching station performance:', error);
+                document.getElementById('stationChart').innerHTML = '<div class="loading">Error loading station data</div>';
+            }
+        }
+
+        // Fetch and update anomaly heatmap
+        async function fetchAnomalyHeatmap() {
+            try {
+                const response = await fetch('/api/anomaly-heatmap');
+                const heatmap = await response.json();
+                
+                if (heatmap && Object.keys(heatmap).length > 0) {
+                    Plotly.newPlot('heatmapChart', heatmap.data, heatmap.layout, {responsive: true});
+                } else {
+                    document.getElementById('heatmapChart').innerHTML = '<div class="loading">No anomaly pattern data available</div>';
+                }
+            } catch (error) {
+                console.error('Error fetching anomaly heatmap:', error);
+                document.getElementById('heatmapChart').innerHTML = '<div class="loading">Error loading heatmap</div>';
+            }
+        }
+
+        // Main update function
+        async function updateDashboard() {
+            console.log('Updating dashboard...');
+            
+            await Promise.all([
+                fetchMetrics(),
+                fetchTimeline(),
+                fetchStationPerformance(),
+                fetchAnomalyHeatmap()
+            ]);
+            
+            updateLastRefreshTime();
+        }
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Dashboard initializing...');
+            updateDashboard();
+            
+            // Auto-refresh every 30 seconds
+            setInterval(updateDashboard, 30000);
+        });
+
+        // Handle window resize for responsive charts
+        window.addEventListener('resize', function() {
+            setTimeout(() => {
+                Plotly.Plots.resize('timelineChart');
+                Plotly.Plots.resize('stationChart');
+                Plotly.Plots.resize('heatmapChart');
+            }, 100);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+[
+  {
+    "type": "staffing_optimization",
+    "hour": 0,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 0: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 1,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 1: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 2,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 2: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 3,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 3: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 4,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 4: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 5,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 5: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 6,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 6: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 7,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 7: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 8,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 8: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 9,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 9: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 10,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 10: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 11,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 11: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 12,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 12: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 13,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 13: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 14,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 14: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 15,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 15: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 16,
+    "transaction_volume": 91,
+    "avg_queue_length": 1.9553571428571428,
+    "recommended_stations": 3,
+    "recommended_staff": 4,
+    "priority": "high",
+    "details": "Hour 16: 91 transactions, avg queue 2.0 - recommend 4 staff, 3 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 17,
+    "transaction_volume": 161,
+    "avg_queue_length": 2.1543669600541637,
+    "recommended_stations": 4,
+    "recommended_staff": 5,
+    "priority": "high",
+    "details": "Hour 17: 161 transactions, avg queue 2.2 - recommend 5 staff, 4 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 18,
+    "transaction_volume": 0,
+    "avg_queue_length": 1.6666666666666667,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 18: 0 transactions, avg queue 1.7 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 19,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 19: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 20,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 20: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 21,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 21: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 22,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 22: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  },
+  {
+    "type": "staffing_optimization",
+    "hour": 23,
+    "transaction_volume": 0,
+    "avg_queue_length": 0,
+    "recommended_stations": 1,
+    "recommended_staff": 2,
+    "priority": "low",
+    "details": "Hour 23: 0 transactions, avg queue 0.0 - recommend 2 staff, 1 stations"
+  }
+]

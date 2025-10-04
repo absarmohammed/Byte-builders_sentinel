@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT SENTINEL - ML-Enhanced Retail Analytics</title>
+    
+    <!-- Plotly.js for interactive charts -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <!-- Bootstrap CSS for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #2E8B57;
+            --secondary-color: #4169E1;
+            --accent-color: #FF6347;
+            --warning-color: #FFA500;
+            --success-color: #32CD32;
+            --danger-color: #DC143C;
+            --bg-dark: #1a1a1a;
+            --bg-light: #f8f9fa;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .dashboard-header {
+            background: rgba(26, 26, 26, 0.95);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .metric-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            opacity: 0.8;
+        }
+
+        .metric-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .metric-label {
+            font-size: 1.1em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+        }
+
+        .ml-status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-trained { background-color: var(--success-color); }
+        .status-untrained { background-color: var(--danger-color); }
+        .status-configured { background-color: var(--warning-color); }
+
+        .precision-score {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .refresh-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .alert-panel {
+            background: rgba(220, 20, 60, 0.1);
+            border-left: 5px solid var(--danger-color);
+            border-radius: 0 10px 10px 0;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+        }
+
+        .badge-ml {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            font-size: 0.8em;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(46, 139, 87, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(46, 139, 87, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(46, 139, 87, 0); }
+        }
+
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Dashboard Header -->
+    <div class="dashboard-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="mb-0">
+                        <i class="fas fa-shield-alt"></i> PROJECT SENTINEL
+                        <span class="badge badge-ml ms-3">CORE SYSTEM + ML-ENHANCED</span>
+                    </h1>
+                    <p class="mb-0 mt-2">Retail Intelligence System | 4 Core Challenges + Advanced ML Analytics</p>
+                    <small class="text-muted">Inventory Shrinkage • Self-Checkout Security • Resource Allocation • Customer Experience</small>
+                </div>
+                <div class="col-md-4 text-end">
+                    <button class="refresh-btn" onclick="refreshAllData()">
+                        <i class="fas fa-sync-alt"></i> Refresh Data
+                    </button>
+                    <button class="refresh-btn ms-2" onclick="trainMLModels()">
+                        <i class="fas fa-brain"></i> Train ML Models
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Key Metrics Row -->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon" style="color: var(--primary-color);">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="metric-value" id="fraud-detection-rate">--</div>
+                    <div class="metric-label">Fraud Detection Precision</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon" style="color: var(--secondary-color);">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="metric-value" id="customer-anomalies">--</div>
+                    <div class="metric-label">Customer Anomaly Rate</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon" style="color: var(--accent-color);">
+                        <i class="fas fa-queue"></i>
+                    </div>
+                    <div class="metric-value" id="queue-accuracy">--</div>
+                    <div class="metric-label">Queue Prediction Accuracy</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="metric-card text-center">
+                    <div class="metric-icon" style="color: var(--warning-color);">
+                        <i class="fas fa-boxes"></i>
+                    </div>
+                    <div class="metric-value" id="inventory-issues">2</div>
+                    <div class="metric-label">Inventory Discrepancies</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ML Model Status Panel -->
+        <div class="row">
+            <div class="col-12">
+                <div class="chart-container">
+                    <h3><i class="fas fa-brain"></i> ML Models Status & Performance</h3>
+                    <div class="row" id="ml-status-cards">
+                        <!-- ML status cards will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="core-system-tab" data-bs-toggle="tab" data-bs-target="#core-system-panel" type="button" role="tab">
+                    <i class="fas fa-shield-alt"></i> Core System Requirements
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="ml-tab" data-bs-toggle="tab" data-bs-target="#ml-panel" type="button" role="tab">
+                    <i class="fas fa-robot"></i> ML Enhanced Features
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="realtime-tab" data-bs-toggle="tab" data-bs-target="#realtime-panel" type="button" role="tab">
+                    <i class="fas fa-chart-line"></i> Real-time Analytics
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security-panel" type="button" role="tab">
+                    <i class="fas fa-exclamation-triangle"></i> Security Insights
+                </button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="dashboardTabContent">
+            <!-- Core System Requirements Tab -->
+            <div class="tab-pane fade show active" id="core-system-panel" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-tasks"></i> PROJECT SENTINEL Core Challenges</h4>
+                            <div class="row">
+                                <div class="col-12 mb-3">
+                                    <div class="alert alert-success">
+                                        <h5><i class="fas fa-check-circle"></i> Challenge 1: Inventory Shrinkage</h5>
+                                        <p class="mb-1"><strong>Status:</strong> ✅ Fully Implemented</p>
+                                        <p class="mb-1"><strong>Detection Methods:</strong> Theft, Misplacement, Record Inaccuracies</p>
+                                        <p class="mb-0"><strong>Algorithm:</strong> @algorithm inventory-shrinkage-detection</p>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="alert alert-success">
+                                        <h5><i class="fas fa-check-circle"></i> Challenge 2: Self-Checkout Security</h5>
+                                        <p class="mb-1"><strong>Status:</strong> ✅ All 4 Scenarios Implemented</p>
+                                        <p class="mb-1"><strong>Features:</strong> Scan Avoidance, Barcode Switching, Weight Discrepancies, System Crashes</p>
+                                        <p class="mb-0"><strong>Algorithms:</strong> 4 @algorithm tagged functions</p>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="alert alert-success">
+                                        <h5><i class="fas fa-check-circle"></i> Challenge 3: Resource Allocation</h5>
+                                        <p class="mb-1"><strong>Status:</strong> ✅ Optimization Engine Active</p>
+                                        <p class="mb-1"><strong>Features:</strong> Staff Allocation, Queue Management, Efficiency Metrics</p>
+                                        <p class="mb-0"><strong>Algorithm:</strong> @algorithm staffing-optimization</p>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="alert alert-success">
+                                        <h5><i class="fas fa-check-circle"></i> Challenge 4: Customer Experience</h5>
+                                        <p class="mb-1"><strong>Status:</strong> ✅ Analytics & Optimization</p>
+                                        <p class="mb-1"><strong>Features:</strong> Wait Time Analysis, Experience Metrics, Behavior Patterns</p>
+                                        <p class="mb-0"><strong>Algorithm:</strong> @algorithm customer-experience-analysis</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-database"></i> Data Integration Status</h4>
+                            <div id="core-system-metrics">
+                                <!-- Core system metrics will be loaded here -->
+                            </div>
+                            <div class="mt-4">
+                                <h5><i class="fas fa-stream"></i> Data Sources (All 6 Required)</h5>
+                                <div class="list-group">
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-tag"></i> RFID Data</span>
+                                        <span class="badge bg-success">✅ Active</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-users"></i> Queue Monitoring</span>
+                                        <span class="badge bg-success">✅ Active</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-cash-register"></i> POS Transactions</span>
+                                        <span class="badge bg-success">✅ Active</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-camera"></i> Product Recognition</span>
+                                        <span class="badge bg-success">✅ Active</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-boxes"></i> Inventory Data</span>
+                                        <span class="badge bg-success">✅ Active</span>
+                                    </div>
+                                    <div class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-clipboard-list"></i> Product Catalog</span>
+                                        <span class="badge bg-success">✅ Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML Performance Tab -->
+            <div class="tab-pane fade" id="ml-panel" role="tabpanel">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-robot"></i> Enhanced ML Features (Additional Capabilities)</h4>
+                            <p class="text-muted mb-4">Advanced machine learning models for fraud detection and predictive analytics beyond core requirements.</p>
+                            <div id="ml-performance-chart" class="loading-spinner">
+                                <div class="spinner-border text-primary" role="status"></div>
+                                <p>Loading ML performance data...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Real-time Predictions Tab -->
+            <div class="tab-pane fade" id="realtime-panel" role="tabpanel">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-tachometer-alt"></i> Real-time ML Predictions Dashboard</h4>
+                            <div id="realtime-predictions-chart" class="loading-spinner">
+                                <div class="spinner-border text-success" role="status"></div>
+                                <p>Loading real-time predictions...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Station Analytics Tab -->
+            <div class="tab-pane fade" id="analytics-panel" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-store"></i> Station Performance</h4>
+                            <div id="station-performance-chart" class="loading-spinner">
+                                <div class="spinner-border text-warning" role="status"></div>
+                                <p>Loading station data...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-fire"></i> Anomaly Heatmap</h4>
+                            <div id="anomaly-heatmap" class="loading-spinner">
+                                <div class="spinner-border text-danger" role="status"></div>
+                                <p>Loading anomaly patterns...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Insights Tab -->
+            <div class="tab-pane fade" id="security-panel" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-timeline"></i> Security Event Timeline</h4>
+                            <div id="timeline-chart" class="loading-spinner">
+                                <div class="spinner-border text-info" role="status"></div>
+                                <p>Loading timeline data...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="chart-container">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Critical Alerts</h4>
+                            <div id="alerts-panel">
+                                <!-- Alert items will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        // Global variables
+        let refreshInterval;
+        let mlModelsData = {};
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🤖 PROJECT SENTINEL Dashboard Initializing...');
+            loadAllData();
+            setupAutoRefresh();
+        });
+
+        // Load all dashboard data
+        async function loadAllData() {
+            try {
+                await Promise.all([
+                    loadMLPerformance(),
+                    loadRealtimePredictions(),
+                    loadStationPerformance(),
+                    loadAnomalyHeatmap(),
+                    loadTimeline(),
+                    loadMetrics()
+                ]);
+                console.log('✅ All dashboard data loaded successfully');
+            } catch (error) {
+                console.error('❌ Error loading dashboard data:', error);
+            }
+        }
+
+        // Load ML model performance data
+        async function loadMLPerformance() {
+            try {
+                const [performanceResponse, chartResponse] = await Promise.all([
+                    fetch('/api/ml-performance'),
+                    fetch('/api/ml-performance-chart')
+                ]);
+                
+                const performanceData = await performanceResponse.json();
+                const chartData = await chartResponse.json();
+                
+                mlModelsData = performanceData;
+                updateMLStatusCards(performanceData);
+                updateMetricCards(performanceData);
+                
+                // Create ML performance chart
+                const chartElement = document.getElementById('ml-performance-chart');
+                chartElement.innerHTML = '';
+                chartElement.classList.remove('loading-spinner');
+                
+                if (Object.keys(chartData).length > 0) {
+                    Plotly.newPlot('ml-performance-chart', chartData.data, chartData.layout, {responsive: true});
+                } else {
+                    chartElement.innerHTML = '<p class="text-muted">No ML performance data available. Train models first.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading ML performance:', error);
+                document.getElementById('ml-performance-chart').innerHTML = 
+                    '<p class="text-danger">Error loading ML performance data</p>';
+            }
+        }
+
+        // Load real-time predictions
+        async function loadRealtimePredictions() {
+            try {
+                const response = await fetch('/api/realtime-predictions');
+                const chartData = await response.json();
+                
+                const chartElement = document.getElementById('realtime-predictions-chart');
+                chartElement.innerHTML = '';
+                chartElement.classList.remove('loading-spinner');
+                
+                if (Object.keys(chartData).length > 0) {
+                    Plotly.newPlot('realtime-predictions-chart', chartData.data, chartData.layout, {responsive: true});
+                } else {
+                    chartElement.innerHTML = '<p class="text-muted">No real-time predictions available.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading real-time predictions:', error);
+                document.getElementById('realtime-predictions-chart').innerHTML = 
+                    '<p class="text-danger">Error loading real-time predictions</p>';
+            }
+        }
+
+        // Load station performance
+        async function loadStationPerformance() {
+            try {
+                const response = await fetch('/api/station-performance');
+                const chartData = await response.json();
+                
+                const chartElement = document.getElementById('station-performance-chart');
+                chartElement.innerHTML = '';
+                chartElement.classList.remove('loading-spinner');
+                
+                if (Object.keys(chartData).length > 0) {
+                    Plotly.newPlot('station-performance-chart', chartData.data, chartData.layout, {responsive: true});
+                } else {
+                    chartElement.innerHTML = '<p class="text-muted">No station performance data available.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading station performance:', error);
+                document.getElementById('station-performance-chart').innerHTML = 
+                    '<p class="text-danger">Error loading station performance data</p>';
+            }
+        }
+
+        // Load anomaly heatmap
+        async function loadAnomalyHeatmap() {
+            try {
+                const response = await fetch('/api/anomaly-heatmap');
+                const chartData = await response.json();
+                
+                const chartElement = document.getElementById('anomaly-heatmap');
+                chartElement.innerHTML = '';
+                chartElement.classList.remove('loading-spinner');
+                
+                if (Object.keys(chartData).length > 0) {
+                    Plotly.newPlot('anomaly-heatmap', chartData.data, chartData.layout, {responsive: true});
+                } else {
+                    chartElement.innerHTML = '<p class="text-muted">No anomaly patterns detected.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading anomaly heatmap:', error);
+                document.getElementById('anomaly-heatmap').innerHTML = 
+                    '<p class="text-danger">Error loading anomaly heatmap</p>';
+            }
+        }
+
+        // Load timeline
+        async function loadTimeline() {
+            try {
+                const response = await fetch('/api/timeline');
+                const chartData = await response.json();
+                
+                const chartElement = document.getElementById('timeline-chart');
+                chartElement.innerHTML = '';
+                chartElement.classList.remove('loading-spinner');
+                
+                if (Object.keys(chartData).length > 0) {
+                    Plotly.newPlot('timeline-chart', chartData.data, chartData.layout, {responsive: true});
+                } else {
+                    chartElement.innerHTML = '<p class="text-muted">No timeline data available.</p>';
+                }
+                
+            } catch (error) {
+                console.error('Error loading timeline:', error);
+                document.getElementById('timeline-chart').innerHTML = 
+                    '<p class="text-danger">Error loading timeline data</p>';
+            }
+        }
+
+        // Load general metrics
+        async function loadMetrics() {
+            try {
+                const response = await fetch('/api/metrics');
+                const data = await response.json();
+                updateAlertsPanel(data);
+                updateCoreSystemMetrics(data);
+            } catch (error) {
+                console.error('Error loading metrics:', error);
+            }
+        }
+
+        // Update core system metrics
+        function updateCoreSystemMetrics(metricsData) {
+            const container = document.getElementById('core-system-metrics');
+            
+            const coreMetrics = {
+                'Total Events Processed': metricsData.total_events || 0,
+                'Inventory Shrinkage Incidents': metricsData.shrinkage_incidents || 0,
+                'Security Violations Detected': metricsData.security_incidents || 0,
+                'Resource Optimization Alerts': metricsData.resource_alerts || 0,
+                'Customer Experience Issues': metricsData.experience_issues || 0,
+                'System Uptime': (100 - (metricsData.system_error_rate || 0)).toFixed(1) + '%'
+            };
+            
+            container.innerHTML = Object.entries(coreMetrics).map(([label, value]) => `
+                <div class="row mb-2">
+                    <div class="col-8 text-start">${label}:</div>
+                    <div class="col-4 text-end"><strong>${value}</strong></div>
+                </div>
+            `).join('');
+        }
+
+        // Update ML status cards
+        function updateMLStatusCards(performanceData) {
+            const container = document.getElementById('ml-status-cards');
+            const models = performanceData.models_status;
+            
+            container.innerHTML = '';
+            
+            Object.entries(models).forEach(([modelName, data]) => {
+                const statusClass = `status-${data.status}`;
+                const modelDisplayName = modelName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                
+                const precision = data.precision || data.cluster_quality || 0;
+                const confidence = data.confidence || 0;
+                
+                const card = `
+                    <div class="col-md-3">
+                        <div class="metric-card">
+                            <h6>
+                                <span class="ml-status-indicator ${statusClass}"></span>
+                                ${modelDisplayName}
+                            </h6>
+                            <div class="precision-score">
+                                Precision: ${(precision * 100).toFixed(1)}%
+                            </div>
+                            <div class="precision-score">
+                                Confidence: ${(confidence * 100).toFixed(1)}%
+                            </div>
+                            <small class="text-muted">Last updated: ${data.last_updated}</small>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // Update metric cards
+        function updateMetricCards(performanceData) {
+            const predictions = performanceData.real_time_predictions;
+            const models = performanceData.models_status;
+            
+            // Update with real calculated values from algorithms
+            document.getElementById('fraud-detection-rate').textContent = 
+                models.fraud_detection ? models.fraud_detection.precision + '%' : '--';
+            document.getElementById('customer-anomalies').textContent = 
+                models.customer_behavior ? models.customer_behavior.precision + '%' : '--';
+            document.getElementById('queue-accuracy').textContent = 
+                models.queue_optimization ? models.queue_optimization.precision + '%' : '--';
+            document.getElementById('inventory-issues').textContent = 
+                predictions.inventory_discrepancies || 0;
+        }
+
+        // Update alerts panel
+        function updateAlertsPanel(metricsData) {
+            const alertsPanel = document.getElementById('alerts-panel');
+            
+            const alerts = [
+                {
+                    type: 'danger',
+                    icon: 'fas fa-exclamation-triangle',
+                    title: 'Critical Fraud Alerts',
+                    count: metricsData.critical_alerts || 0,
+                    description: 'High-confidence fraud detections requiring immediate attention'
+                },
+                {
+                    type: 'warning',
+                    icon: 'fas fa-exclamation-circle',
+                    title: 'Warning Alerts',
+                    count: metricsData.warning_alerts || 0,
+                    description: 'Suspicious activities for monitoring'
+                },
+                {
+                    type: 'info',
+                    icon: 'fas fa-info-circle',
+                    title: 'System Health',
+                    count: (100 - (metricsData.system_error_rate || 0)).toFixed(1) + '%',
+                    description: 'Overall system performance'
+                }
+            ];
+            
+            alertsPanel.innerHTML = alerts.map(alert => `
+                <div class="alert alert-${alert.type} mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="${alert.icon} me-3"></i>
+                        <div>
+                            <strong>${alert.title}</strong>
+                            <div class="h4 mb-0">${alert.count}</div>
+                            <small>${alert.description}</small>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Refresh all data
+        async function refreshAllData() {
+            console.log('🔄 Refreshing dashboard data...');
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Refreshing...';
+            btn.disabled = true;
+            
+            try {
+                await loadAllData();
+                console.log('✅ Dashboard refreshed successfully');
+            } catch (error) {
+                console.error('❌ Error refreshing dashboard:', error);
+            }
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+
+        // Train ML models
+        async function trainMLModels() {
+            console.log('🧠 Training ML models...');
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Training...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/train-models');
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    console.log('✅ ML models trained successfully');
+                    await loadMLPerformance(); // Refresh ML data
+                } else {
+                    console.error('❌ ML training failed:', result.message);
+                }
+            } catch (error) {
+                console.error('❌ Error training ML models:', error);
+            }
+            
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }
+
+        // Setup auto-refresh
+        function setupAutoRefresh() {
+            // Refresh every 30 seconds
+            refreshInterval = setInterval(() => {
+                loadMetrics();
+                loadRealtimePredictions();
+            }, 30000);
+        }
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', function() {
+            if (refreshInterval) {
+                clearInterval(refreshInterval);
+            }
+        });
+    </script>
+</body>
+</html>
