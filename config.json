@@ -1,0 +1,24 @@
+{
+    "anomaly_threshold": 100,
+    "max_events_per_batch": 1000,
+    "dashboard_port": 5000,
+    "log_level": "INFO",
+    "data_sources": {
+        "test_data_path": "data/test/",
+        "final_data_path": "data/final/"
+    },
+    "output_settings": {
+        "test_output": "evidence/output/test/events.jsonl",
+        "final_output": "evidence/output/final/events.jsonl"
+    },
+    "algorithm_parameters": {
+        "anomaly_detection": {
+            "threshold": 100,
+            "high_severity_threshold": 200
+        },
+        "event_processing": {
+            "batch_size": 100,
+            "timeout_seconds": 30
+        }
+    }
+}

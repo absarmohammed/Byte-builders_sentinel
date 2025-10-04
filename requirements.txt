@@ -1,0 +1,33 @@
+# Requirements for Byte-builders_sentinel
+# Add your project dependencies here
+
+# Core dependencies
+numpy>=1.21.0
+pandas>=1.3.0
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Web framework (if using Flask/FastAPI for dashboard)
+flask>=2.0.0
+# fastapi>=0.70.0
+# uvicorn>=0.15.0
+
+# Visualization
+plotly>=5.0.0
+
+# Data processing
+scikit-learn>=1.0.0
+scipy>=1.7.0
+
+# Utilities
+python-dateutil>=2.8.0
+requests>=2.25.0
+tqdm>=4.60.0
+
+# Testing
+pytest>=6.0.0
+pytest-cov>=3.0.0
+
+# Development
+black>=21.0.0
+flake8>=4.0.0
